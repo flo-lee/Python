@@ -1,0 +1,145 @@
+'''
+Realizar un programa PARA UN CAJERO
+donde se tenga la clase padre USUARIO.
+Se deberá catalogar por tipos de usuario:
+ - Usuario Normal 
+ - Usuario Peeferencial
+ - Usuario VIP 
+ 
+ Además, la clase padre tendrá 3 acciones: 
+ Retirar, depositar, verSaldo 
+ 
+ Propiedades de la clase Padre (nombre, ci, saldo)
+ 
+ Para cada tipo de usuario aplicar restricciones de retiro: 
+ ej. usuarioNormal (Límite=1000 bs al dia)
+ ej. usuarioNormal (Límite=5000 bs al dia)
+ ej. usuarioNormal (Límite=sin limite)
+ '''
+ #Clase PADRE 
+class Usuario:
+    def __init__(self, nombre, ci, saldo):
+        self.nombre = nombre
+        self.ci = ci
+        self.saldo = saldo
+
+    # Definir las acciones de la clase
+    def verSaldo(self):
+        print(f"El saldo es {self.saldo} Bs. - Usuario: {self.nombre}")
+
+    def depositar(self, monto):
+        # Para depositar en la cuenta, no hay restricciones. Lo mínimo será 1.
+        if monto > 0:
+            self.saldo = self.saldo + monto
+            print(f"Depósito realizado correctamente... Saldo actual: {self.saldo}")
+        else:
+            print("Error. Verifique el monto ingresado.")
+
+    def retirar(self, monto):
+        if monto > self.saldo:
+            print("Saldo insuficiente, no se pudo realizar la operación.")
+        else:
+            self.saldo = self.saldo - monto
+            print(f"Retiro exitoso de {monto} Bs. - Saldo Actual: {self.saldo} Bs.")
+
+'''# Uso de la clase
+usuario1 = Usuario("Steve", 12997572, 0)
+usuario1.verSaldo()
+
+monto = int(input("Ingrese el monto a depositar: "))
+usuario1.depositar(monto)
+
+monto = int(input("Ingrese el monto a retirar: "))
+usuario1.retirar(monto)'''
+
+#Catalogar a los usuarios 
+
+class UsuarioNormal(Usuario):
+    def __init__(self, nombre, ci, saldo, codigo, correo, direccion):
+   #posible añadir más atributos 
+        super().__init__(nombre,ci,saldo)
+        self.correo = correo
+        self.direccion = direccion
+        #variables nativas
+        self.limite=1000
+    def retirar(self, monto):
+        #aplicar restricción
+        if monto > self.limite: 
+            print("Error, alcanzó el límite de retiro.")
+        elif monto > self.saldo:
+             print("Saldo insuficiente. ")
+        else: 
+            self.saldo=self.saldo-monto
+            print(f"Retiro Normal procesado. Saldo actual: {self.saldo} Bs.")
+
+'''usuarioN=UsuarioNormal("Jane Lane", 12997572, 100, 129976, "jlane@outlook.com", "Back Harlow")
+            
+usuarioN.retirar(200)
+usuarioN.retirar(1001)
+usuarioN.depositar(500)'''
+
+
+class UsuarioPreferencial(Usuario):
+    def __init__(self, nombre, ci, saldo):
+        super().__init__(nombre, ci, saldo)
+        self.limite=5000
+        
+        #acciones
+        
+    def retirar(self, monto):
+        #aplicar restricción
+        if monto > self.limite: 
+            print("Error, alcanzó el límite de retiro.")
+        elif monto > self.saldo:
+             print("Saldo insuficiente. ")
+        else: 
+            self.saldo=self.saldo-monto
+            print(f"Retiro Preferencial procesado. Saldo actual: {self.saldo} Bs.")
+            
+'''usuarioP=UsuarioPreferencial("Daria", 12997571, 1000)
+usuarioP.retirar(1000)
+usuarioP.depositar(6000)
+usuarioP.retirar(5001)'''
+
+class UsuarioVip(Usuario):
+    def __init__(self, nombre, ci, saldo):
+        super().__init__(nombre, ci, saldo)
+        self.ilimitado=True
+        
+        #acciones
+        
+    def retirar(self, monto):
+        #aplicar restricción
+        if self.ilimitado:
+            
+            if monto > self.saldo:
+                print("Saldo insuficiente...")
+            else: 
+                self.saldo=self.saldo-monto
+ 
+        else:
+           print ("Ya no es un usuario VIP.")
+
+while True:
+    print("Menu")
+    print("1. Ver saldo")
+    print("2. Retirar")
+    print("3. Depositar")
+    print("4. Salir")
+    
+    opcion =input("Ingrese la opción a realizar: ")
+    if opcion=="1":
+        #ver saldo
+        pass 
+       
+    elif opcion=="2":
+        #retirar
+        pass
+        
+    elif opcion=="3":
+        #depositar
+        pass
+        
+    elif opcion=="4":
+        #salir
+        break 
